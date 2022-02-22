@@ -10,17 +10,17 @@ with safe_import_context() as import_ctx:
 
 
 class Solver(BaseSolver):
-    name = 'sklearn'
+    name = "sklearn"
 
-    install_cmd = 'conda'
-    requirements = ['scikit-learn']
+    install_cmd = "conda"
+    requirements = ["scikit-learn"]
     references = [
-        'F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, '
-        'O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, '
-        'J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot'
-        ' and E. Duchesnay'
+        "F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, "
+        "O. Grisel, M. Blondel, P. Prettenhofer, R. Weiss, V. Dubourg, "
+        "J. Vanderplas, A. Passos, D. Cournapeau, M. Brucher, M. Perrot"
+        " and E. Duchesnay"
         '"Scikit-learn: Machine Learning in Python", J. Mach. Learn. Res., '
-        'vol. 12, pp. 2825-283 (2011)'
+        "vol. 12, pp. 2825-283 (2011)"
     ]
 
     def set_objective(self, X, y, lmbd, fit_intercept):
@@ -28,11 +28,13 @@ class Solver(BaseSolver):
         self.fit_intercept = fit_intercept
 
         n_samples = self.X.shape[0]
-        self.clf = Lasso(alpha=self.lmbd/n_samples,
-                         fit_intercept=fit_intercept, tol=0)
-        warnings.filterwarnings('ignore', category=ConvergenceWarning)
+        self.clf = Lasso(
+            alpha=self.lmbd / n_samples, fit_intercept=fit_intercept, tol=0
+        )
+        warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
     def run(self, n_iter):
+        # print("Sklearn :", n_iter)
         self.clf.max_iter = n_iter
         self.clf.fit(self.X, self.y)
 
